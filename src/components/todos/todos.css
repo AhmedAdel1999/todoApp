@@ -1,0 +1,39 @@
+.todos-container{
+    flex-basis: 100%;
+    padding: 10px;
+    background-color: rgba(231, 228, 228,0.3);
+}
+.todos-container .toggels{
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+.todos-container .toggels button{
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    border: 1px solid rgb(30, 86, 170);
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+    color: rgb(30, 86, 170);
+}
+.todos-container .toggels button.active{
+    background-color: rgb(30, 86, 170);
+    color: #fff;
+}
+.todos-container .toggels button svg{
+    font-size: 20px;
+    transform: translateY(-2px);
+}
+.todos>p{
+    width: 100%;
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    text-transform: capitalize;
+    padding-top: 30px;
+}

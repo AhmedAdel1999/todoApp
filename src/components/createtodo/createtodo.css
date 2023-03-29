@@ -1,0 +1,56 @@
+.create-todos{
+    flex-basis: 100%;
+    padding: 25px;
+}
+.create-box{
+    padding: 15px;
+    background-color: rgba(231, 228, 228,0.3);
+    border-radius: 5px;
+}
+.create-box form{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+.create-box form div{
+    display: flex;
+    flex-direction: column; 
+    margin-bottom: 10px;
+}
+.create-box form div input,
+.create-box form div select,
+.create-box form div textarea{
+    padding: 5px 20px;
+}
+.create-box form div label{
+    text-transform: capitalize;
+}
+.create-box form div button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    outline: none;
+    border: none;
+    background-color: rgb(32, 150, 42);
+    color: #fff;
+    padding: 5px;
+    border-radius: 5px;
+    text-transform: capitalize;
+}
+.create-box form div:last-of-type{
+    margin-bottom: 0px;
+    margin-top: 10px;
+}
+.create-box>button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    outline: none;
+    border: none;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background-color: rgb(248, 20, 58);
+    color: #fff;
+}

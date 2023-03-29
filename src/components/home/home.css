@@ -1,0 +1,46 @@
+.home-page{
+    position: relative;
+    width: 100%;
+    flex-basis: 100%;
+}
+.home-page .welcomebox{
+    width: 100%;
+    height: calc(100% - 60px);
+    display: flex;
+    justify-content: center;
+    padding-top: 100px;
+}
+.home-page .welcomebox>div{
+    width: 390px;
+}
+@media (max-width:450px){
+    .home-page .welcomebox>div{
+        width: 93%;
+    }
+}
+.home-page .welcomebox>div h3{
+    margin-bottom: 10px;
+}
+.home-page .welcomebox>div p{
+    margin-bottom: 10px;
+    font-size: 17px;
+    color: rgba(0, 0, 0,0.8);
+}
+.home-page .footer{
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    text-transform: capitalize;
+    background-color: rgba(231, 228, 228,0.8);
+    height: 60px;
+}
+.home-page .footer p,
+.home-page .footer h6{
+    margin: 0px;
+}

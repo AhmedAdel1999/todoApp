@@ -2,107 +2,87 @@
     width: 100%;
     display: flex;
     flex-wrap: nowrap;
+    align-items: center;
     justify-content: space-between;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    background-color:rgba(231, 228, 228,0.2);
+    background-color:#522157;
     position: sticky;
     top: 0px;
     z-index: 100;
-    padding: 0px 20px;
+    padding: 5px 60px;
 }
 .navbar-section .logo{
-    font-size: 18px;
-    font-weight: bold;
-    height: 45px;
-    color: rgb(248, 20, 58);
-}
-.navbar-section .logo a{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
     text-decoration: none;
-    color: inherit;
-    height: inherit;
-    display: flex;
-    align-items: center;
+    color: #fff !important;
 }
-.navbar-section .toggel{
-    padding: 0px 20px;
-    font-size: 25px;
+.logo img{
+    width: 70px;
+    height: 40px;
+    object-fit: fill;
+    object-position: center;
+}
+.logo h3{
+    margin: 0px;
+    font-size: 20px;
     font-weight: bold;
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    height: 45px;
-    color: rgb(248, 20, 58);
 }
+
+
 .navbar-section .links{
     list-style-type: none;
     display: flex;
-    flex-basis: auto;
     flex-grow: 1;
     justify-content: flex-end;
     align-items: center;
+    gap: 10px;
     margin: 0px;
     padding: 0px;
-    transition: all .5s ease-in-out;
 }
-.navbar-section .links li{
-    display: flex;
-    height: 100%;
-    align-items: center;
-    padding: 0px 5px;
-}
+
 .navbar-section .links li>a{
-    text-decoration: none;
-    text-transform: capitalize;
-    padding: 5px;
-    font-size: 16px;
-    font-weight: bold;
-    color: rgb(30, 86, 170);
-    border-radius: 2px;
-}
-.navbar-section .links li>a.add{
     display: flex;
     justify-content: center;
     align-items: center;
+    text-decoration: none;
+    text-transform: capitalize;
+    padding: 5px 15px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #fff;
+    background-color: #c2649a;
+    border-radius: 15px;
+    transition: all .3s linear;
+}
+.navbar-section .links li>a.add{
     padding: 0px;
     width: 40px;
     height: 40px;
     border-radius: 50%;
     color: #fff;
-    background-color: rgb(248, 20, 58);
+}
+.navbar-section .links li>a.active{
+    color: #000;
+}
+.navbar-section .links li>a:hover{
+    color: #000;
+}
+.navbar-section .links li>a svg{
+    margin-right: 2px;
 }
 .navbar-section .links li>a.add svg{
     font-size: 30px;
 }
-.navbar-section .links li>a:hover{
-    color: rgb(248, 20, 58);
-}
-.navbar-section .links li>a.add :hover{
-    color: #fff;
-}
 
-@media (max-width:992px){
-.navbar-section{
-    flex-wrap: wrap;
-}
-.navbar-section .links{
-    flex-basis: 100%;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-}
-.navbar-section .links li{
-    height: auto;
-    width: 100%;
-    line-height: initial;
-    padding: 0px 20px;
-    overflow: hidden;
-}
-.navbar-section .links li a{
-    display: block;
-    height: 40px;
-    line-height: 40px;
-    border-radius: 5px;
-}
- 
+
+
+@media (max-width:500px){
+    .navbar-section{
+        padding: 5px 25px;
+    }
+    .navbar-section .links li>a{
+        padding: 5px 7px;
+        font-size: 16px;
+    }
 }

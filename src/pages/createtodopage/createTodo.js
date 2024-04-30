@@ -5,9 +5,8 @@ import { clearTodoState, createTodo, updataTodo } from "../../features/todos/tod
 import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
 import { useToasts } from "react-toast-notifications";
 import { useDispatch,useSelector } from "react-redux"
-import Ring from "react-cssfx-loading/lib/Ring"
-import { GetConfig } from "../utils/userData";
-import ErrorMsg from "../utils/errorMsg";
+import { CircularProgress } from "@material-ui/core";
+import ErrorMsg from "../../utils/errorMsg";
 import "./createtodo.css"
 
 
@@ -24,7 +23,6 @@ function getFormattedDate(date) {
     return year + '-' + month + '-' + day;
   }
 const CreateTodoItem = () =>{
-    const config = GetConfig()
     const [todo,setTodo]=useState({
         label:'Personal',
         title:"",
@@ -38,7 +36,9 @@ const CreateTodoItem = () =>{
     const history = useHistory()
     const {id} = useParams()
     const { addToast:notify } = useToasts()
-    const {todos,isLoading,isSuccess,isError,errorMsg,successMsg} = useSelector((state)=>state.todo)
+    const {userData} = useSelector((state)=>state.user)
+    const {todos,isCreateLoading,isCreateSuccess,isCreateError,createErrorMsg,createSuccessMsg,
+    isUpdateLoading,isUpdateSuccess,isUpdateError,updateErrorMsg,updateSuccessMsg} = useSelector((state)=>state.todo)
     const currentTodo = id && todos.filter((ele)=>ele._id===id)[0]
 
     useEffect(()=>{
@@ -48,18 +48,15 @@ const CreateTodoItem = () =>{
       }
     },[id])
 
-    useEffect(()=>{
-        dispatch(clearTodoState())
-    },[])
 
     useEffect(()=>{
-      if(isSuccess){
+      if(isCreateSuccess || isUpdateSuccess){
         dispatch(clearTodoState())
-        notify(`${successMsg}`,
+        notify(`${createSuccessMsg || updateSuccessMsg}`,
         {appearance: 'success',autoDismiss:"true"})
         history.push("/")
       }
-    },[isSuccess])
+    },[isCreateSuccess,isUpdateSuccess])
 
      const handelChange = (e) =>{
         const{name,value}=e.target
@@ -73,7 +70,7 @@ const CreateTodoItem = () =>{
                 notify(`You Have To Fill All Fields First`,
                 {appearance: 'warning',autoDismiss:"true"})
             }else{
-                await dispatch(updataTodo({todo,config}))
+                await dispatch(updataTodo({todoData:todo,userId:userData._id,todoId:id}))
             }   
         }
         else{
@@ -81,7 +78,7 @@ const CreateTodoItem = () =>{
                 notify(`You Have To Fill All Fields First`,
                 {appearance: 'warning',autoDismiss:"true"})
             }else{
-                await dispatch(createTodo({todo,config}))
+                await dispatch(createTodo({todoData:todo,userId:userData._id}))
                 setTodo({...todo,discription:"",title:""})
             }
         }
@@ -89,53 +86,54 @@ const CreateTodoItem = () =>{
     return(
         <div className="create-todos">
             <div className="create-box">
+                <h3>Create Your Todo</h3>
                 {
-                    isError&&<ErrorMsg msg={errorMsg} />
+                    (isCreateError || isUpdateError)&&<ErrorMsg msg={createErrorMsg || updateErrorMsg} />
                 }
                 <form onSubmit={handelSubmit}>
                     <div>
-                        <label>Label</label>
+                        <label>Label:</label>
                         <select onChange={handelChange} name="label" value={todo.label}>
                             <option value="Personal">Personal</option>
                             <option value="Work">Work</option>
                         </select>
                     </div>
                     <div>
-                        <label>Title</label>
+                        <label>Title:</label>
                         <input type="text" placeholder="Title" name="title" value={todo.title} onChange={handelChange} />
                     </div>
                     <div>
-                        <label>Description</label>
+                        <label>Description:</label>
                         <textarea placeholder="Task Description" name="discription" value={todo.discription} onChange={handelChange} />
                     </div>
                     <div>
-                    <label>task compeletion data</label>
+                    <label>task compeletion data:</label>
                         <input type="date" name="date" value={getFormattedDate(new Date(todo.date))} onChange={handelChange} />
                     </div>
-                    <div>
+                    <div className="btns">
                         <button type="submit">
                             {
                                Edit?
                                <React.Fragment>
                                    <span>Update Todo</span>
                                    {
-                                       isLoading&&
-                                       <Ring color="#FFF" width="25px" height="25px" duration="1s" />
+                                       isUpdateLoading&&
+                                       <CircularProgress size={25} style={{color:"inherit",margin:"0px"}} />
                                    }
                                </React.Fragment>
                                :
                                <React.Fragment>
                                    <span>Create Todo</span>
                                    {
-                                       isLoading&&
-                                       <Ring color="#FFF" width="25px" height="25px" duration="1s" />
+                                       isCreateLoading&&
+                                       <CircularProgress size={25} style={{color:"inherit",margin:"0px"}} />
                                    }
                                </React.Fragment>
                             }
                         </button>
+                        <button onClick={()=>history.push("/")}><KeyboardBackspaceIcon /></button>
                     </div>
                 </form>
-                <button onClick={()=>history.push("/")}><KeyboardBackspaceIcon /></button>
                 
             </div>
         </div>

@@ -2,34 +2,31 @@ import React,{useEffect} from "react";
 import { useDispatch,useSelector } from 'react-redux';
 import { useHistory } from "react-router-dom";
 import { Formik, Form, Field , ErrorMessage } from 'formik';
-import LockIcon from '@material-ui/icons/Lock';
-import { registerTodo,cleanState } from "../../features/todos/userSlice";
-import Load from "../utils/Load";
-import ErrorMsg from "../utils/errorMsg";
+import { CircularProgress } from "@material-ui/core";
+import { cleanUserState, registerTodo } from "../../features/todos/userSlice";
+import ErrorMsg from "../../utils/errorMsg";
 import * as Yup from "yup"
 import "./auth.css"
 
 
 const Register = () => {
 
-  const {isSuccess,isError,isLoading,errMessage} = useSelector((state)=>state.user)
+  const {isRegisterLoading,isSuccessRegister,isRegisterError,registerErrMessage} = useSelector((state)=>state.user)
   const dispatch = useDispatch()
   const history = useHistory()
+  console.log(isSuccessRegister)
 
   const onSubmit = async(values)=>{
     await dispatch(registerTodo(values))
   }
 
+ 
   useEffect(() => {
-      dispatch(cleanState());
-  }, []);
-
-  useEffect(() => {
-    if (isSuccess) {
-      dispatch(cleanState());
+    if (isSuccessRegister) {
+      dispatch(cleanUserState())
       history.push("/")
     }
-  }, [isSuccess, isError]);
+  }, [isSuccessRegister]);
   
   const schema = () =>{
     const schema = Yup.object().shape({
@@ -39,20 +36,16 @@ const Register = () => {
     return schema
   }
 
-  if(isLoading){
-    return <Load />
-  }
 
   return (
     <div className="auth">
         <div className="auth-content">
-          <div className="auth-header">
-            <span><LockIcon /></span>
-            <span>Register</span>
-          </div>
+          <h3 className="auth-header">
+             Register Form
+          </h3>
           {
-            isError&&
-            <ErrorMsg msg={errMessage} />
+            isRegisterError&&
+            <ErrorMsg msg={registerErrMessage} />
           }
           <Formik 
             initialValues={{
@@ -73,7 +66,13 @@ const Register = () => {
                 <ErrorMessage name="password" component="span" />
               </div>
 
-              <button type="submit">Register</button>
+              <button type="submit">
+                <span>Register</span>
+               {
+                isRegisterLoading&&
+                <CircularProgress size={25} style={{margin:"0px",color:"inherit"}} />
+               }
+              </button>
             </Form>
           </Formik>
         </div>

@@ -1,0 +1,69 @@
+.create-todos{
+    flex-basis: 100%;
+    padding: 30px 60px;
+}
+.create-box{
+    background-color: rgba(231, 228, 228,0.3);
+    border-radius: 5px;
+}
+.create-box h3{
+    margin-bottom: 20px;
+    color: #552157;
+    font-weight: bold;
+}
+.create-box form{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.create-box form div{
+    display: flex;
+    flex-direction: column; 
+}
+.create-box form div input,
+.create-box form div select,
+.create-box form div textarea{
+    padding: 7px 20px;
+    background-color: inherit;
+    outline: none;
+    border: none;
+    border-radius: 7px;
+    border: 2px solid #552157;
+}
+.create-box form div input::placeholder,
+.create-box form div select::placeholder,
+.create-box form div textarea::placeholder{
+    color: #000;
+}
+.create-box form div label{
+    text-transform: capitalize;
+    font-weight: bold;
+    color: #552157;
+}
+.create-box form .btns{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+.create-box form .btns button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    outline: none;
+    border: none;
+    font-weight: bold;
+    background-color: #c2649a;
+    color: #fff;
+    padding: 7px 10px;
+    border-radius: 5px;
+    text-transform: capitalize;
+}
+
+@media(max-width:500px){
+    .create-todos{
+        padding: 30px 25px;
+    }
+}

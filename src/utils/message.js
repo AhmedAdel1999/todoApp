@@ -4,7 +4,7 @@ const Message = (props) =>{
     return(
         <div>
             <Alert onClose={props.handleClose} severity="success">
-                Saved GoBack to see.
+                Saved Go Back to see.
             </Alert>
         </div>
     )

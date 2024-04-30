@@ -1,118 +1,160 @@
 import { createSlice ,createAsyncThunk} from '@reduxjs/toolkit';
-import axiosInstance from '../../components/utils/baseUrl';
+import axiosInstance from '../../utils/baseUrl';
 
 
 //creating todos
 export const createTodo =createAsyncThunk(
   "todo/createTodo",
-  async(obj,{rejectWithValue})=>{
-    const{todo,config}=obj
-   let data = axiosInstance.post("/api/create",todo,{...config}).then((res)=>{
-     return res.data
-   }).catch((err)=>{
-     console.log(err)
-   })
-   return data;
+  async({userId,todoData},{ rejectWithValue,fulfillWithValue })=>{
+    try{
+      await axiosInstance.post(`user/${userId}/todo`,todoData)
+      let response = await axiosInstance.get(`/todo`)
+      let data = await response.data
+      return fulfillWithValue(data)
+    }catch(error){
+        rejectWithValue(error)
+    }
   }
+
+
+
 )
 //updating todos
 export const updataTodo =createAsyncThunk(
   "todo/updatetodo",
-  async(obj)=>{
-    const{todo,config}=obj
-   let data = axiosInstance.post(`/api/${todo._id}`,todo,{...config}).then((res)=>{
-     return res.data
-   }).catch((err)=>{
-     console.log(err)
-   })
-   return data;
+  async({userId,todoId,todoData},{ rejectWithValue,fulfillWithValue })=>{
+    try{
+      await axiosInstance.put(`user/${userId}/todo/${todoId}`,todoData)
+      let response = await axiosInstance.get(`/todo`)
+      let data = await response.data
+      return fulfillWithValue(data)
+    }catch(error){
+        rejectWithValue(error)
+    }
   }
 ) 
 //deleting todos
 export const deleteTodo =createAsyncThunk(
   "todo/deleteTodo",
-  async(obj)=>{
-    const{id,config}=obj
-   let data = axiosInstance.delete(`/api/${id}`,{...config}).then((res)=>{
-     return res.data
-   }).catch((err)=>{
-     console.log(err)
-   })
-   return data;
+  async({userId,todoId},{ rejectWithValue,fulfillWithValue })=>{
+    try{
+      await axiosInstance.delete(`user/${userId}/todo/${todoId}`)
+      let response = await axiosInstance.get(`/todo`)
+      let data = await response.data
+      return fulfillWithValue(data)
+    }catch(error){
+        rejectWithValue(error)
+    }
   }
 )
 //getting todos
 export const catchTodo =createAsyncThunk(
   "todo/catchTodo",
-  async(config)=>{
-   let data = axiosInstance.get(`/api/get`,{...config}).then((res)=>{
-     return res.data
-   }).catch((err)=>{
-     console.log(err)
-   })
-   return data;
+  async(undefined,{ rejectWithValue,fulfillWithValue })=>{
+    try{
+      let response = await axiosInstance.get(`/todo`)
+      let data = await response.data
+      return fulfillWithValue(data)
+    }catch(error){
+        rejectWithValue(error)
+    }
   }
 )
+
 const initialState = {
   todos: [],
-  isLoading:false,
-  isSuccess:false,
-  isError:false,
-  errorMsg:"",
-  successMsg:"",
-  status: 'idle',
+  isCreateLoading:false,
+  isCreateSuccess:false,
+  isCreateError:false,
+  createErrorMsg:"",
+  createSuccessMsg:"",
+
+  isUpdateLoading:false,
+  isUpdateSuccess:false,
+  isUpdateError:false,
+  updateErrorMsg:"",
+  updateSuccessMsg:"",
+
+  isDeleteLoading:false,
+  isDeleteSuccess:false,
+  deleteSuccessMsg:"",  
 };
 export const todoSlice = createSlice({
   name: 'todo',
   initialState,
   reducers: {
-    logoutTodo:((state)=>{
+    clearTodoData:((state)=>{
       state.todos=[]
     }),
     clearTodoState:((state)=>{
-      state.isSuccess=false;
-      state.isError=false;
-      state.successMsg="";
-      state.errorMsg="";
+      state.isCreateLoading= false;
+      state.isCreateSuccess= false;
+      state.isCreateError= false;
+      state.createErrorMsg= "";
+      state.createSuccessMsg= "";
+
+      state.isUpdateLoading= false;
+      state.isUpdateSuccess= false;
+      state.isUpdateError= false;
+      state.updateErrorMsg= "";
+      state.updateSuccessMsg= "";
+
+      state.isDeleteLoading= false;
+      state.isDeleteSuccess= false;
+      state.deleteSuccessMsg= "";
     })
   },
   extraReducers:{
+
+    //create todo actions
     [createTodo.pending]:((state)=>{
-      state.isLoading=true
-   }),
-    [createTodo.fulfilled]:((state,action)=>{
-      state.isLoading=false
-      state.isSuccess=true
-      state.successMsg='A New Todo Has Been Created'
-      state.todos.push(action.payload)
+      state.isCreateLoading=true
     }),
-    [createTodo.rejected]:((state,)=>{
-      state.errorMsg='Error!! Failed To Create New Todo'
-      state.isLoading=false
-      state.isError=true
-   }),
+    [createTodo.fulfilled]:((state,action)=>{
+      state.isCreateLoading=false
+      state.isCreateSuccess=true
+      state.createSuccessMsg='A New Todo Has Been Created'
+      state.todos=[...action.payload]
+    }),
+    [createTodo.rejected]:((state)=>{
+      state.createErrorMsg='Error!! Failed To Create New Todo'
+      state.isCreateLoading=false
+      state.isCreateError=true
+    }),
+
+   //get all todos action
     [catchTodo.fulfilled]:((state,action)=>{
       state.todos=[...action.payload]
     }),
 
+    //update all todos actions
     [updataTodo.pending]:((state)=>{
-      state.isLoading=true
+      state.isUpdateLoading=true
     }),
     [updataTodo.fulfilled]:((state,action)=>{
-      state.isLoading=false
-      state.isSuccess=true
-      state.successMsg="Todo Has Been Updated"
+      state.isUpdateLoading=false
+      state.isUpdateSuccess=true
+      state.updateSuccessMsg="Todo Has Been Updated"
       state.todos=[...action.payload]
     }),
     [updataTodo.rejected]:((state)=>{
-      state.errorMsg="Error!! Failed To Update Todo"
-      state.isLoading=false
-      state.isError=true
+      state.updateErrorMsg="Error!! Failed To Update Todo"
+      state.isUpdateLoading=false
+      state.isUpdateError=true
+    }),
+    
+    //delete todo actions
+    [deleteTodo.pending]:((state)=>{
+      state.isDeleteLoading=true
     }),
     [deleteTodo.fulfilled]:((state,action)=>{
-       state.todos=[...action.payload]
+      state.isDeleteLoading=false
+      state.isDeleteSuccess= true;
+      state.deleteSuccessMsg="Todo Has Been Deleted Successfully"
+      state.todos=[...action.payload]
     }),
+    
   }
 });
-export const {logoutTodo,clearTodoState} = todoSlice.actions
+export const {clearTodoData,clearTodoState} = todoSlice.actions
 export default todoSlice.reducer;

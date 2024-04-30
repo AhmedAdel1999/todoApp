@@ -1,7 +1,6 @@
 .todos-container{
     flex-basis: 100%;
-    padding: 10px;
-    background-color: rgba(231, 228, 228,0.3);
+    padding: 45px 60px;
 }
 .todos-container .toggels{
     margin-bottom: 10px;
@@ -9,21 +8,21 @@
     justify-content: center;
     flex-wrap: wrap;
     gap: 10px;
+    margin-bottom: 30px;
 }
 .todos-container .toggels button{
     border: none;
     outline: none;
-    border-radius: 5px;
-    border: 1px solid rgb(30, 86, 170);
-    padding: 5px;
+    border-radius: 7px;
+    padding: 7px 10px;
     display: flex;
     align-items: center;
-    background-color: #fff;
-    color: rgb(30, 86, 170);
+    gap: 5px;
+    background-color: #c2649a;
+    color: #fff;
 }
 .todos-container .toggels button.active{
-    background-color: rgb(30, 86, 170);
-    color: #fff;
+    background-color: #733558;  
 }
 .todos-container .toggels button svg{
     font-size: 20px;
@@ -32,8 +31,14 @@
 .todos>p{
     width: 100%;
     text-align: center;
-    font-size: 18px;
+    font-size: 25px;
     font-weight: bold;
     text-transform: capitalize;
-    padding-top: 30px;
+    margin: 30px 0px 0px 0px;
+}
+
+@media(max-width:500px){
+    .todos-container{
+        padding: 45px 25px;
+    }
 }

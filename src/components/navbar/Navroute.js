@@ -1,85 +1,67 @@
-import React, {useState} from "react";
-import {Link} from "react-router-dom"
+import React from "react";
+import {Link,NavLink} from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
-import { logoutTodo } from "../../features/todos/userSlice";
-import { logoutTodo as LogOut } from "../../features/todos/todoSlice";
-import {Home,Clear,ViewWeekSharp,AccountCircle,Add} from '@material-ui/icons';
-import { FaBars } from 'react-icons/fa';
-import { GetUsername } from "../utils/userData";
-import { useMediaQuery } from "react-responsive";
+import { clearUserData } from "../../features/todos/userSlice";
+import { clearTodoData } from "../../features/todos/todoSlice";
+import {AccountCircle,Add} from '@material-ui/icons';
+import logo from "../../assets/logo.png"
 import "./navebar.css"
 
 const Navbar = () =>{
-    const token = useSelector((state)=>state.user.token)
-    const username = GetUsername()
-    const history = useHistory()
-    const isShowToggle = useMediaQuery({maxWidth:992})
-    const[toggle,setToggle]=useState(false)
+    const {userData} = useSelector((state)=>state.user)
 
     const dispatch = useDispatch()
     const logout = () =>{
-        dispatch(logoutTodo())
-        dispatch(LogOut())
-        history.push("/")
-        setToggle(false)
+        dispatch(clearTodoData())
+        dispatch(clearUserData())
     }
 
-    let style={
-        overflow:toggle?"visible":"hidden",
-        height:isShowToggle===false?"auto":toggle===true?token?"120px":"80px":"0px"
-    }
     
     return(
         <div className="navbar-section" >
-           <div className="logo">
-                <Link to="/">
-                    <Home />
-                    <span>TODO</span>
-                </Link>
-           </div>
-           {
-               isShowToggle&&
-               <div className="toggel" onClick={()=>setToggle(!toggle)}>
-                   {
-                       toggle?
-                       <Clear />
-                       :
-                       <FaBars />
-                   }
-               </div>
-           }
-           <ul className="links" style={{...style}}>
+            <Link className="logo" to="/">
+                <img 
+                    alt="logo"
+                    src={logo}
+                    loading="lazy"
+                />
+                <h3>Todo App</h3>
+            </Link>
+           <ul className="links">
                {
-                   token?
+                   userData.token?
                    <React.Fragment>
                        <li>
-                            <Link onClick={()=>setToggle(false)} to="/" className="account">
-                                <AccountCircle/>{username}
-                            </Link>
+                            <NavLink to="/" className="account">
+                                <AccountCircle/>
+                                <span>{userData.userName}</span>
+                            </NavLink>
                        </li>
                        <li>
-                            <Link onClick={()=>setToggle(false)} to="/" onClick={logout}>
+                            <Link 
+                                to="/"
+                                onClick={logout} 
+                            >
                                 Logout
                             </Link> 
                        </li>
                        <li>
-                            <Link onClick={()=>setToggle(false)} to="/create" className="add">
+                            <NavLink to="/create" className="add">
                                 <Add />
-                            </Link>
+                            </NavLink>
                        </li>
                    </React.Fragment>
                    :
                    <React.Fragment>
                        <li>
-                            <Link onClick={()=>setToggle(false)} to="/login">
+                            <NavLink to="/login">
                                 Login
-                            </Link>
+                            </NavLink>
                        </li>
                        <li>
-                            <Link onClick={()=>setToggle(false)} to="/register">
+                            <NavLink to="/register">
                                 Register
-                            </Link>
+                            </NavLink>
                        </li>
                    </React.Fragment>
                }

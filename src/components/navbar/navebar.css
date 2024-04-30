@@ -18,7 +18,7 @@
     color: #fff !important;
 }
 .logo img{
-    width: 70px;
+    width: 100px;
     height: 40px;
     object-fit: fill;
     object-position: center;
@@ -85,4 +85,11 @@
         padding: 5px 7px;
         font-size: 16px;
     }
+    .logo img{
+        width: 70px;
+    }
+    .logo h3{
+        font-size: 13px;
+    }
+    
 }

@@ -21,11 +21,11 @@ const  App = () => {
       <BrowserRouter>
          <Navbar />
               <Switch>
-                <Route path="/" exact strict component={userData.token?Todos:Home} />
+                <Route path="/" exact strict component={userData?.token?Todos:Home} />
                 <Route path="/register" exact strict component={Register} />
                 <Route path="/login" exact strict component={Login} />
-                <Route path="/create" exact strict component={userData.token?CreateTodoItem:PageNotFound} />
-                <Route path="/update/:id" exact strict component={userData.token?CreateTodoItem:PageNotFound} />
+                <Route path="/create" exact strict component={userData?.token?CreateTodoItem:PageNotFound} />
+                <Route path="/update/:id" exact strict component={userData?.token?CreateTodoItem:PageNotFound} />
                 <Route path="*" component={PageNotFound} />
               </Switch>
  

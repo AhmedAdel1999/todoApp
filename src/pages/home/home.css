@@ -47,4 +47,7 @@
     .home-page{
         padding: 40px 25px;
     }
+    .home-text p{
+        min-width: 200px;
+    }
 }

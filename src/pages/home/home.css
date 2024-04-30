@@ -37,6 +37,9 @@
     .home-page section{
         grid-column: span 12;
     }
+    .home-page{
+        column-gap: 0px;
+    }
 }
 @media(min-width:500px) and (max-width:900px){
     .home-text{
@@ -46,8 +49,5 @@
 @media(max-width:500px){
     .home-page{
         padding: 40px 25px;
-    }
-    .home-text p{
-        min-width: 200px;
     }
 }

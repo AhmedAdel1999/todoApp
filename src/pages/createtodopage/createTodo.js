@@ -115,7 +115,7 @@ const CreateTodoItem = () =>{
                             {
                                Edit?
                                <React.Fragment>
-                                   <span>Update Todo</span>
+                                   <span>Update Task</span>
                                    {
                                        isUpdateLoading&&
                                        <CircularProgress size={25} style={{color:"inherit",margin:"0px"}} />
@@ -123,7 +123,7 @@ const CreateTodoItem = () =>{
                                </React.Fragment>
                                :
                                <React.Fragment>
-                                   <span>Create Todo</span>
+                                   <span>Create Task</span>
                                    {
                                        isCreateLoading&&
                                        <CircularProgress size={25} style={{color:"inherit",margin:"0px"}} />

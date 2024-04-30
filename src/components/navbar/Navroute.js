@@ -25,7 +25,7 @@ const Navbar = () =>{
                     src={logo}
                     loading="lazy"
                 />
-                <h3>Todo App</h3>
+                <h3>Task Manager</h3>
             </Link>
            <ul className="links">
                {

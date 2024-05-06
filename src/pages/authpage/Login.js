@@ -45,8 +45,8 @@ const Login = () => {
           }
           <Formik 
             initialValues={{
-            userName:"",
-            password:"",
+            userName:"ahmed",
+            password:"ahmed123",
             }}
             onSubmit={onSubmit}
             validationSchema={schema}

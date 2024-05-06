@@ -16,6 +16,7 @@
     text-transform: capitalize;
     color: #8b4c70;
     font-size: 18px;
+    font-weight: bold;
     gap: 45px;
 }
 
@@ -33,9 +34,13 @@
     color: #8b4c70;
     font-size: 20px;
 }
+.todo-card .todo-body p:first-child{
+    font-weight: bold;
+    font-size: 18px;
+}
 .todo-card .todo-body p{
     text-transform: capitalize;
-    max-width: 400px;
+    max-width: 550px;
     margin: 0px;
 }
 .todo-card .todo-controll{
